@@ -147,13 +147,7 @@ public static class SyntaxHighlighter
         // JSON keys: "key":
         var keyRegex = new Regex(@"""([^""\\]|\\.)*""\s*:");
         foreach (Match m in keyRegex.Matches(code))
-            spans.Add(new ColoredSpan { Token = TokenType.Keyword, Start = m.Index, Length = m.Length - (m.Value.Length - m.Value.TrimEnd(':').TrimEnd().Length) });
-
-        // Actually, let's redo: key span = the quoted string portion (before :)
-        spans.Clear();
-        foreach (Match m in keyRegex.Matches(code))
         {
-            // The key is the string part + colon; mark the whole match as keyword
             spans.Add(new ColoredSpan { Token = TokenType.Keyword, Start = m.Index, Length = m.Length });
         }
 
@@ -358,7 +352,11 @@ public static class SyntaxHighlighter
             int start = code.IndexOf(open, pos, StringComparison.Ordinal);
             if (start < 0) break;
             int end = code.IndexOf(close, start + open.Length, StringComparison.Ordinal);
-            if (end < 0) { spans.Add(new ColoredSpan { Token = TokenType.Comment, Start = start, Length = code.Length - start }); break; }
+            if (end < 0)
+            {
+                spans.Add(new ColoredSpan { Token = TokenType.Comment, Start = start, Length = code.Length - start });
+                break;
+            }
             end += close.Length;
             spans.Add(new ColoredSpan { Token = TokenType.Comment, Start = start, Length = end - start });
             pos = end;

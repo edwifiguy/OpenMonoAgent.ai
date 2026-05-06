@@ -181,7 +181,7 @@ public static class MarkdownRenderer
         try
         {
             var spans = SyntaxHighlighter.Highlight(code, lang);
-            // Only return if we got keyword spans (meaning we recognised the language)
+            // Only return if we got keyword spans (meaning we recognized the language)
             return spans.Any(s => s.Token != TokenType.Plain) ? spans : null;
         }
         catch { return null; }
