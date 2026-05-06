@@ -11,7 +11,7 @@ public class ContextWindowMeter
 
     public int PromptTokens { get; private set; }
 
-    public int UsagePercent => _contextSize > 0 ? PromptTokens * 100 / _contextSize : 0;
+    public int UsagePercent => _contextSize > 0 ? (int)((long)PromptTokens * 100 / _contextSize) : 0;
 
     public int RemainingTokens => Math.Max(0, _contextSize - PromptTokens);
 

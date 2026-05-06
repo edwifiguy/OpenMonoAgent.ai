@@ -13,8 +13,8 @@ public class PauseController
     {
         if (_isPaused)
         {
-            _isPaused = false;
             _pauseTcs.TrySetResult();
+            _isPaused = false;
             OnPauseStateChanged?.Invoke(this, false);
         }
         else
