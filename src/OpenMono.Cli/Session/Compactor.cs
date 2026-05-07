@@ -32,6 +32,14 @@ public sealed class Compactor
         return tokens > threshold;
     }
 
+    public async Task<SessionState> CompactAsync(
+        SessionState session,
+        CancellationToken ct)
+    {
+        var (compacted, _) = await CompactAsync(session, null, ct);
+        return compacted;
+    }
+
     public async Task<(SessionState Session, CompactionReport Report)> CompactAsync(
         SessionState session,
         string? customInstructions = null,
